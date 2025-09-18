@@ -1,15 +1,23 @@
 package main
 
-import (
-	"SoftwareDesignPatterns/week1"
-	"fmt"
-)
+import . "SoftwareDesignPatterns/week2"
 
 func main() {
-	car := week1.NewCarBuilder().
-		SetBrand("BMW").
-		SetYear(2020).
-		Build()
+	// init notification factory
+	var factory NotificationFactory
 
-	fmt.Println(car.GetBrand(), car.GetYear())
+	// testing Email notification
+	factory = &EmailFactory{}
+	notification := factory.CreateNotification()
+	notification.Send("Hello via Email!")
+
+	// Testing SMS notification
+	factory = &SMSFactory{}
+	notification = factory.CreateNotification()
+	notification.Send("Hello via SMS!")
+
+	// Testing Push notification
+	factory = &PushFactory{}
+	notification = factory.CreateNotification()
+	notification.Send("Hello via Push!")
 }
