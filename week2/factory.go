@@ -24,3 +24,10 @@ type PushFactory struct{}
 func (f *PushFactory) CreateNotification() Notification {
 	return &PushNotification{}
 }
+
+//// Abstract NotificationFactory interface
+//
+//type AbstractNotificationFactory interface {
+//	CreateNotification() Notification
+//	CreateAnotherProduct() AnotherProduct
+//}
