@@ -1,23 +1,25 @@
 package main
 
-import . "SoftwareDesignPatterns/week2"
+import (
+	. "SoftwareDesignPatterns/week3"
+	"fmt"
+)
 
 func main() {
-	// init notification factory
-	var factory NotificationFactory
+	// creating adaptee
+	stringService := &StringService{}
 
-	// testing Email notification
-	factory = &EmailFactory{}
-	notification := factory.CreateNotification()
-	notification.Send("Hello via Email!")
+	// creating adapter with adaptee
+	calculatorAdapter := &ServiceAdapter{
+		Service: stringService,
+	}
 
-	// Testing SMS notification
-	factory = &SMSFactory{}
-	notification = factory.CreateNotification()
-	notification.Send("Hello via SMS!")
+	// using adapter and expecting int output
+	result, err := calculatorAdapter.Add(100, 25)
 
-	// Testing Push notification
-	factory = &PushFactory{}
-	notification = factory.CreateNotification()
-	notification.Send("Hello via Push!")
+	if err != nil {
+		fmt.Printf("Ошибка: %v\n", err)
+	} else {
+		fmt.Printf("Успешно! 100 + 25 = %d (Тип: %T)\n", result, result)
+	}
 }
