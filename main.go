@@ -1,25 +1,41 @@
 package main
 
 import (
-	. "SoftwareDesignPatterns/week3"
+	. "SoftwareDesignPatterns/week4/abstractions/computers"
+	. "SoftwareDesignPatterns/week4/implementers/printers"
 	"fmt"
 )
 
 func main() {
-	// creating adaptee
-	stringService := &StringService{}
+	// Creating implementers (printers)
+	hpPrinter := &Hp{}
+	epsonPrinter := &Epson{}
 
-	// creating adapter with adaptee
-	calculatorAdapter := &ServiceAdapter{
-		Service: stringService,
-	}
+	// Creating abstractions (computers)
+	macComputer := &Mac{}
+	winComputer := &Windows{}
 
-	// using adapter and expecting int output
-	result, err := calculatorAdapter.Add(100, 25)
+	// 1. Using Mac computer with Hp printer
+	fmt.Println("--- Mac with HP ---")
+	macComputer.SetPrinter(hpPrinter)
+	macComputer.Print()
+	fmt.Println()
 
-	if err != nil {
-		fmt.Printf("Ошибка: %v\n", err)
-	} else {
-		fmt.Printf("Успешно! 100 + 25 = %d (Тип: %T)\n", result, result)
-	}
+	// 2. Using Mac computer with Epson printer
+	fmt.Println("--- Mac with Epson ---")
+	macComputer.SetPrinter(epsonPrinter)
+	macComputer.Print()
+	fmt.Println()
+
+	// 3. Using Windows computer with Hp printer
+	fmt.Println("--- Windows with HP ---")
+	winComputer.SetPrinter(hpPrinter)
+	winComputer.Print()
+	fmt.Println()
+
+	// 4. Using Windows computer with Epson printer
+	fmt.Println("--- Windows with Epson ---")
+	winComputer.SetPrinter(epsonPrinter)
+	winComputer.Print()
+
 }
