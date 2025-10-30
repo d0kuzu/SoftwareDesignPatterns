@@ -1,7 +1,7 @@
-package week7
+package week6
 
 import (
-	"SoftwareDesignPatterns/week7/strategy"
+	"SoftwareDesignPatterns/week6/strategy"
 	"fmt"
 )
 

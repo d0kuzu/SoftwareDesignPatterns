@@ -1,32 +1,34 @@
 package main
 
 import (
-	. "SoftwareDesignPatterns/week7"
-	. "SoftwareDesignPatterns/week7/strategy/concrete"
+	. "SoftwareDesignPatterns/week7/observer/concrete"
+	. "SoftwareDesignPatterns/week7/subject/concrete"
 	"fmt"
 )
 
 func main() {
-	cartTotal := 150.0 // Simulating total prce of cart
+	// 1. Create a Subject (Item)
+	phone := NewItem("Smartphone X")
 
-	// 1. Creating Context (cart), with initial strategy "NoDiscount"
-	cart := &ShoppingCart{
-		TotalAmount: cartTotal,
-		Strategy:    &NoDiscount{}, // Инициализируем стратегией по умолчанию
-	}
+	// 2. Create Observers (Customers)
+	customer1 := NewCustomer("C1")
+	customer2 := NewCustomer("C2")
 
-	fmt.Println("--- Step 1: Using default strategy (No Discount Strategy) ---")
-	cart.Checkout()
+	// 3. Register Observers
+	phone.RegisterObserver(customer1)
+	phone.RegisterObserver(customer2)
 
-	// 2. Dynamically changing out strategy to "Percentage Discount" with 15%
-	fmt.Println("--- Step 2: Changing strategy to Percentage (15%) ---")
-	percentStrategy := &PercentageDiscount{Percentage: 0.15}
-	cart.SetStrategy(percentStrategy)
-	cart.Checkout()
+	// 4. Change Subject's state -> Notification
+	phone.UpdateAvailability(true)
+	// Output:
+	// Customer C1 received notification: Smartphone X: Now in stock!
+	// Customer C2 received notification: Smartphone X: Now in stock!
 
-	// 3. Dynamically changing out strategy to "Fixed Discount" with 20$
-	fmt.Println("--- Step 2: Changing strategy to Fixed (20$) ---")
-	fixedStrategy := &FixedAmountDiscount{Amount: 20.0}
-	cart.SetStrategy(fixedStrategy)
-	cart.Checkout()
+	fmt.Println("---")
+
+	// 5. Change Subject's state again -> Notification
+	phone.UpdateAvailability(false)
+	// Output:
+	// Customer C1 received notification: Smartphone X: Out of stock.
+	// Customer C2 received notification: Smartphone X: Out of stock.
 }
