@@ -1,34 +1,30 @@
 package main
 
 import (
-	. "SoftwareDesignPatterns/week7/observer/concrete"
-	. "SoftwareDesignPatterns/week7/subject/concrete"
+	. "SoftwareDesignPatterns/week8"
 	"fmt"
 )
 
 func main() {
-	// 1. Create a Subject (Item)
-	phone := NewItem("Smartphone X")
+	// Declaring elements
+	circle := &Circle{Radius: 5}
+	square := &Square{Side: 4}
 
-	// 2. Create Observers (Customers)
-	customer1 := NewCustomer("C1")
-	customer2 := NewCustomer("C2")
+	shapes := []Shape{circle, square}
 
-	// 3. Register Observers
-	phone.RegisterObserver(customer1)
-	phone.RegisterObserver(customer2)
+	// 1. Using AreaCalculator
+	fmt.Println("--- Using AreaCalculator ---")
+	areaVisitor := &AreaCalculator{}
 
-	// 4. Change Subject's state -> Notification
-	phone.UpdateAvailability(true)
-	// Output:
-	// Customer C1 received notification: Smartphone X: Now in stock!
-	// Customer C2 received notification: Smartphone X: Now in stock!
+	for _, shape := range shapes {
+		shape.Accept(areaVisitor)
+	}
 
-	fmt.Println("---")
+	// 2. Using Draw
+	fmt.Println("\n--- Using Draw Visitor ---")
+	drawVisitor := &Draw{}
 
-	// 5. Change Subject's state again -> Notification
-	phone.UpdateAvailability(false)
-	// Output:
-	// Customer C1 received notification: Smartphone X: Out of stock.
-	// Customer C2 received notification: Smartphone X: Out of stock.
+	for _, shape := range shapes {
+		shape.Accept(drawVisitor)
+	}
 }
